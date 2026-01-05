@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CAFÉ du BOX — Menu Premium</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      /* PALETA DE CORES BASEADA NO LOGO */
+      --bg-coffee: #1a1715;       /* Preto Café / Marrom Profundo */
+      --bg-card: #24201d;         /* Tom levemente mais claro para os itens (Industrial) */
+      
+      --text-off-white: #f4f1ea;  /* Bege Claro / Off-white (Títulos) */
+      --text-sage: #a8bfa5;       /* Verde Chá / Sage (Descrições) */
+      --text-hazelnut: #c68e64;   /* Marrom Avelã (Preços/Destaques) */
+      
+      --border-color: #3d3632;    /* Bordas sutis */
+      --action-btn: #c68e64;      /* Botões de ação seguindo o Avelã */
+      --whatsapp-green: #4f7a55;  /* Verde WhatsApp ajustado para a paleta Sage */
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: var(--bg-coffee);
+      color: var(--text-off-white);
+      line-height: 1.6;
+      padding-bottom: 120px;
+      /* Textura sutil de ruído para dar aspecto "material" e não chapado */
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* HEADER */
+    .logo-header {
+      text-align: center;
+      margin: 30px 0 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .logo {
+      max-width: 250px;
+      border-radius: 4px;
+      /* Sombra suave para destacar do fundo escuro */
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+      border: 1px solid var(--border-color);
+    }
+    h1 {
+      font-family: 'Oswald', sans-serif;
+      text-align: center;
+      color: var(--text-off-white);
+      font-size: 2.2em;
+      margin-top: 20px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    /* NAV TOP - Estilo Industrial Minimalista */
+    .nav-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 40px;
+    }
+    .nav-link {
+      color: var(--text-off-white);
+      text-decoration: none;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.9em;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      transition: all 0.3s;
+      background: var(--bg-card);
+      letter-spacing: 1px;
+    }
+    .nav-link:hover {
+      border-color: var(--text-hazelnut);
+      color: var(--text-hazelnut);
+      transform: translateY(-2px);
+    }
+
+    /* SEÇÕES */
+    h2 {
+      font-family: 'Oswald', sans-serif;
+      color: var(--text-off-white);
+      margin: 40px 0 20px;
+      font-size: 1.8em;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      border-left: 4px solid var(--text-hazelnut); /* Detalhe Avelã */
+      padding-left: 15px;
+      display: flex;
+      align-items: center;
+    }
+
+    /* CARDS DOS ITENS */
+    .item {
+      background: var(--bg-card);
+      padding: 20px;
+      margin-bottom: 15px;
+      border-radius: 2px; /* Cantos mais retos = mais industrial */
+      border: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .item:hover {
+      border-color: var(--text-sage); /* Brilho Verde Chá suave ao passar o mouse */
+      background: #2a2624;
+    }
+
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 15px;
+    }
+    
+    .item-name {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 500;
+      font-size: 1.25em;
+      color: var(--text-off-white);
+      letter-spacing: 0.5px;
+    }
+
+    .item-price {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      color: var(--text-hazelnut); /* Avelã para o preço */
+      font-size: 1.3em;
+      white-space: nowrap;
+    }
+
+    .item-desc {
+      margin-top: 8px;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 300;
+      font-size: 1em;
+      color: var(--text-sage); /* Verde Chá para descrição */
+      line-height: 1.5;
+    }
+
+    /* BADGES (Adaptadas para a paleta) */
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      font-size: 0.7em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      margin-left: 8px;
+      font-family: 'Oswald', sans-serif;
+      letter-spacing: 1px;
+      vertical-align: middle;
+    }
+    .badge.new { 
+      background: transparent; 
+      color: var(--text-sage); 
+      border: 1px solid var(--text-sage); 
+    }
+    .badge.hot { 
+      background: var(--text-hazelnut); 
+      color: #000; 
+      font-weight: bold;
+    }
+    .badge.special { 
+      border: 1px solid var(--text-off-white); 
+      color: var(--text-off-white); 
+    }
+
+    /* CONTROLES DE QUANTIDADE */
+    .qty-controls {
+      margin-top: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--border-color);
+    }
+    .qty-btn {
+      width: 30px;
+      height: 30px;
+      background: transparent;
+      border: 1px solid var(--text-sage);
+      color: var(--text-sage);
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.2s;
+    }
+    .qty-btn:hover {
+      background: var(--text-sage);
+      color: #000;
+    }
+    .qty-val {
+      font-family: 'Oswald', sans-serif;
+      color: var(--text-off-white);
+      font-size: 1.2em;
+      min-width: 20px;
+      text-align: center;
+    }
+
+    /* BOTÃO CARRINHO FLUTUANTE */
+    #cart-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 70px;
+      height: 70px;
+      background: var(--text-hazelnut);
+      color: #1a1715;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8em;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+      z-index: 1000;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 2px solid var(--bg-coffee);
+    }
+    #cart-btn:hover {
+      transform: scale(1.1);
+      background: #d4a076;
+    }
+    #cart-count {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: var(--text-off-white);
+      color: var(--bg-coffee);
+      font-weight: bold;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8em;
+      border: 2px solid var(--bg-coffee);
+    }
+
+    /* BOTÃO TOPO */
+    #back-to-top {
+      position: fixed;
+      bottom: 110px; /* Acima do carrinho */
+      right: 40px;
+      width: 50px;
+      height: 50px;
+      background: var(--bg-card);
+      color: var(--text-sage);
+      border: 1px solid var(--text-sage);
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 900;
+      display: none;
+      transition: all 0.2s;
+    }
+    #back-to-top:hover {
+      background: var(--text-sage);
+      color: var(--bg-coffee);
+    }
+
+    /* MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      backdrop-filter: blur(5px);
+      z-index: 2000;
+    }
+    .modal-content {
+      background: var(--bg-coffee);
+      margin: 20px auto;
+      padding: 30px;
+      max-width: 500px;
+      border: 1px solid var(--text-hazelnut);
+      border-radius: 8px;
+      color: var(--text-off-white);
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 0 50px rgba(0,0,0,0.8);
+      position: relative;
+    }
+    .close {
+      color: var(--text-hazelnut);
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 2.5em;
+      cursor: pointer;
+      line-height: 0.5;
+    }
+    .cart-total {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.8em;
+      margin: 25px 0;
+      color: var(--text-hazelnut);
+      text-align: center;
+      border-top: 1px solid var(--border-color);
+      padding-top: 20px;
+    }
+    
+    /* BOTÕES GERAIS */
+    button.action-btn {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 4px;
+      font-family: 'Oswald', sans-serif;
+      font-weight: bold;
+      font-size: 1.1em;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 10px;
+      transition: 0.2s;
+    }
+    .btn-copy {
+      background: var(--text-hazelnut);
+      color: #1a1715;
+    }
+    .btn-copy:hover { background: #dba67d; }
+    
+    .btn-whatsapp {
+      background: var(--whatsapp-green);
+      color: #fff;
+    }
+    .btn-whatsapp:hover { background: #5d8f64; }
+
+    /* Responsividade */
+    @media (max-width: 600px) {
+      .container { padding: 15px; }
+      h1 { font-size: 1.8em; }
+      .item-header { flex-direction: column; gap: 5px; }
+      .item-price { align-self: flex-start; margin-top: 5px; font-size: 1.2em; }
+    }
+  </style>
+  </head>
+<body>
+
+  <div class="container">
+    <div class="logo-header">
+      <img src="https://i.imgur.com/5YqZGgO.png" alt="CAFÉ du BOX" class="logo">
+      <h1>Menu Premium</h1>
+    </div>
+
+    <div class="nav-top">
+      <a href="#pao" class="nav-link">Pães</a>
+      <a href="#refeicoes" class="nav-link">Refeições</a>
+      <a href="#hamburgueres" class="nav-link">Burguers</a>
+      <a href="#hidrate" class="nav-link">Hidrate-se</a>
+      <a href="#cafe" class="nav-link">Cafés</a>
+      <a href="#energias" class="nav-link">Energia</a>
+      <a href="#relax" class="nav-link">Relax</a>
+    </div>
+
+    <div class="section">
+      <h2 id="pao">Pães na Chapa</h2>
+      
+      <div class="item" data-name="Pão na Chapa" data-price="5.90">
+        <div class="item-header">
+          <span class="item-name">Pão na Chapa</span>
+          <span class="item-price">R$ 5,90</span>
+        </div>
+        <div class="item-desc">Pão francês tostado na chapa com margarina.</div>
+      </div>
+
+      <div class="item" data-name="Pão na Chapa FIT [V2 Salgado + Doce]" data-price="11.90">
+        <div class="item-header">
+          <span class="item-name">Pão na Chapa FIT [V2 Salgado + Doce] <span class="badge hot">Top</span></span>
+          <span class="item-price">R$ 11,90</span>
+        </div>
+        <div class="item-desc">Metade margarina, metade banana, mel, pasta de amendoim, aveia/granola.</div>
+      </div>
+
+      <div class="item" data-name="Pão na Chapa FIT [Doce]" data-price="13.90">
+        <div class="item-header">
+          <span class="item-name">Pão na Chapa FIT [Doce]</span>
+          <span class="item-price">R$ 13,90</span>
+        </div>
+        <div class="item-desc">Pão francês na chapa com banana, mel, pasta de amendoim e aveia/granola.</div>
+      </div>
+
+      <div class="item" data-name="Pão na Chapa FIT [Doce Gourmet]" data-price="15.90">
+        <div class="item-header">
+          <span class="item-name">Pão na Chapa FIT [Doce Gourmet] <span class="badge special">Especial</span></span>
+          <span class="item-price">R$ 15,90</span>
+        </div>
+        <div class="item-desc">Recheado com creme de avelã ou doce de leite, coberto com banana, amendoim e calda.</div>
+      </div>
+
+      <div class="item" data-name="Pão na Chapa com Ovos e Queijo" data-price="10.90">
+        <div class="item-header">
+          <span class="item-name">Pão na Chapa com Ovos e Queijo</span>
+          <span class="item-price">R$ 10,90</span>
+        </div>
+        <div class="item-desc">Dois ovos e queijo muçarela derretido.</div>
+      </div>
+
+      <div class="item" data-name="Queijo Quente" data-price="7.90">
+        <div class="item-header">
+          <span class="item-name">Queijo Quente</span>
+          <span class="item-price">R$ 7,90</span>
+        </div>
+        <div class="item-desc">Pão francês com queijo muçarela derretido.</div>
+      </div>
+
+      <div class="item" data-name="Misto Quente" data-price="9.90">
+        <div class="item-header">
+          <span class="item-name">Misto Quente</span>
+          <span class="item-price">R$ 9,90</span>
+        </div>
+        <div class="item-desc">Pão francês com queijo e presunto.</div>
+      </div>
+      
+      <div class="item" data-name="Pão de Queijo (5 unid)" data-price="7.90">
+        <div class="item-header">
+          <span class="item-name">Pão de Queijo (5 unid)</span>
+          <span class="item-price">R$ 7,90</span>
+        </div>
+        <div class="item-desc">Clássico, leve e quentinho.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 id="refeicoes">Refeições Leves</h2>
+      <div class="item" data-name="Sanduíche de Ovo" data-price="12.90">
+        <div class="item-header">
+          <span class="item-name">Sanduíche de Ovo</span>
+          <span class="item-price">R$ 12,90</span>
+        </div>
+        <div class="item-desc">Pão sírio com ovo, queijo, presunto e bacon.</div>
+      </div>
+      <div class="item" data-name="Sanduíche de Frango" data-price="14.90">
+        <div class="item-header">
+          <span class="item-name">Sanduíche de Frango</span>
+          <span class="item-price">R$ 14,90</span>
+        </div>
+        <div class="item-desc">Pão sírio com frango, queijo e lombo canadense.</div>
+      </div>
+      <div class="item" data-name="Crepioca de Frango" data-price="18.90">
+        <div class="item-header">
+          <span class="item-name">Crepioca de Frango</span>
+          <span class="item-price">R$ 18,90</span>
+        </div>
+        <div class="item-desc">Frango desfiado, queijo, cebola e tomate.</div>
+      </div>
+      <div class="item" data-name="Waffle de Pão de Queijo" data-price="20.90">
+        <div class="item-header">
+          <span class="item-name">Waffle de Pão de Queijo</span>
+          <span class="item-price">R$ 20,90</span>
+        </div>
+        <div class="item-desc">Com ovo frito e queijo muçarela derretido.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 id="hamburgueres">Hambúrgueres</h2>
+      <div class="item" data-name="Hambúrguer (180g)" data-price="20.90">
+        <div class="item-header">
+          <span class="item-name">Hambúrguer (180g)</span>
+          <span class="item-price">R$ 20,90</span>
+        </div>
+        <div class="item-desc">Picanha, fraldinha ou costela.</div>
+      </div>
+      <div class="item" data-name="X-Burguer" data-price="22.90">
+        <div class="item-header">
+          <span class="item-name">X-Burguer</span>
+          <span class="item-price">R$ 22,90</span>
+        </div>
+        <div class="item-desc">Hambúrguer + queijo muçarela.</div>
+      </div>
+      <div class="item" data-name="Egg X-Burguer" data-price="24.90">
+        <div class="item-header">
+          <span class="item-name">Egg X-Burguer</span>
+          <span class="item-price">R$ 24,90</span>
+        </div>
+        <div class="item-desc">Hambúrguer + ovo frito + queijo.</div>
+      </div>
+      <div class="item" data-name="Burpee Burguer" data-price="34.90">
+        <div class="item-header">
+          <span class="item-name">Burpee Burguer <span class="badge hot">Favorito</span></span>
+          <span class="item-price">R$ 34,90</span>
+        </div>
+        <div class="item-desc">Hambúrguer, queijo, alface, cebola, tomate, picles.</div>
+      </div>
+      <div class="item" data-name="Sprawl Burguer" data-price="32.90">
+        <div class="item-header">
+          <span class="item-name">Sprawl Burguer <span class="badge special">Casa</span></span>
+          <span class="item-price">R$ 32,90</span>
+        </div>
+        <div class="item-desc">Linguiça recheada, queijo, molho à campanha, geleia de pimenta.</div>
+      </div>
+      <div class="item" data-name="S.U. Burguer (Single Under)" data-price="39.90">
+        <div class="item-header">
+          <span class="item-name">S.U. Burguer (Single Under)</span>
+          <span class="item-price">R$ 39,90</span>
+        </div>
+        <div class="item-desc">Hambúrguer, provolone, cebola caramelizada, molho de cheddar.</div>
+      </div>
+      <div class="item" data-name="D.U. Burguer (Double Under)" data-price="49.90">
+        <div class="item-header">
+          <span class="item-name">D.U. Burguer (Double Under) <span class="badge new">Novo</span></span>
+          <span class="item-price">R$ 49,90</span>
+        </div>
+        <div class="item-desc">Dois hambúrgueres, provolone, cebola caramelizada, molho de cheddar.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 id="hidrate">Hidrate-se</h2>
+      <div class="item" data-name="Água Sem Gás (510ml)" data-price="3.90">
+        <div class="item-header"><span class="item-name">Água Sem Gás (510ml)</span><span class="item-price">R$ 3,90</span></div>
+      </div>
+      <div class="item" data-name="Água Com Gás (510ml)" data-price="4.90">
+        <div class="item-header"><span class="item-name">Água Com Gás (510ml)</span><span class="item-price">R$ 4,90</span></div>
+      </div>
+      <div class="item" data-name="Coca-Cola (350ml)" data-price="6.90">
+        <div class="item-header"><span class="item-name">Coca-Cola (350ml)</span><span class="item-price">R$ 6,90</span></div>
+      </div>
+      <div class="item" data-name="Mate Leão / Iced Tea" data-price="5.90">
+        <div class="item-header"><span class="item-name">Mate Leão / Iced Tea</span><span class="item-price">R$ 5,90</span></div>
+      </div>
+      <div class="item" data-name="Sucos Variados (300ml)" data-price="8.90">
+        <div class="item-header"><span class="item-name">Sucos Variados (300ml)</span><span class="item-price">R$ 8,90</span></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 id="cafe">Momento Café</h2>
+      <div class="item" data-name="Espresso Longo (50ml)" data-price="5.90">
+        <div class="item-header"><span class="item-name">Espresso Longo (50ml)</span><span class="item-price">R$ 5,90</span></div>
+      </div>
+      <div class="item" data-name="Café Duplo Suave (100ml)" data-price="6.90">
+        <div class="item-header"><span class="item-name">Café Duplo Suave (100ml)</span><span class="item-price">R$ 6,90</span></div>
+      </div>
+      <div class="item" data-name="Café Coado Clever (150ml)" data-price="7.90">
+        <div class="item-header">
+          <span class="item-name">Café Coado Clever (150ml)</span>
+          <span class="item-price">R$ 7,90</span>
+        </div>
+        <div class="item-desc">Método especial de imersão.</div>
+      </div>
+      <div class="item" data-name="Cappuccino Tradicional" data-price="9.90">
+        <div class="item-header"><span class="item-name">Cappuccino Tradicional</span><span class="item-price">R$ 9,90</span></div>
+      </div>
+      <div class="item" data-name="Café Proteico com Whey" data-price="10.90">
+        <div class="item-header"><span class="item-name">Café Proteico com Whey</span><span class="item-price">R$ 10,90</span></div>
+      </div>
+      <div class="item" data-name="Affogato" data-price="10.90">
+        <div class="item-header"><span class="item-name">Affogato</span><span class="item-price">R$ 10,90</span></div>
+        <div class="item-desc">Sorvete, café, borda de creme de avelã/doce de leite e amendoim.</div>
+      </div>
+      <div class="item" data-name="Café Bombom - Iced Spanish" data-price="15.90">
+        <div class="item-header"><span class="item-name">Café Bombom - Iced Spanish</span><span class="item-price">R$ 15,90</span></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 id="energias">Recupere Energias</h2>
+      <div class="item" data-name="Gatorade" data-price="9.00">
+        <div class="item-header"><span class="item-name">Gatorade</span><span class="item-price">R$ 9,00</span></div>
+      </div>
+      <div class="item" data-name="Monster (473ml)" data-price="12.90">
+        <div class="item-header"><span class="item-name">Monster (473ml)</span><span class="item-price">R$ 12,90</span></div>
+      </div>
+      <div class="item" data-name="Vitamina de Banana (500ml)" data-price="12.90">
+        <div class="item-header"><span class="item-name">Vitamina de Banana (500ml)</span><span class="item-price">R$ 12,90</span></div>
+      </div>
+      <div class="item" data-name="Açaí Natural (300ml)" data-price="11.90">
+        <div class="item-header"><span class="item-name">Açaí Natural (300ml)</span><span class="item-price">R$ 11,90</span></div>
+      </div>
+      <div class="item" data-name="Açaí Natural (500ml)" data-price="18.90">
+        <div class="item-header"><span class="item-name">Açaí Natural (500ml)</span><span class="item-price">R$ 18,90</span></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 id="relax">Para Relaxar</h2>
+      <div class="item" data-name="Heineken (Long Neck)" data-price="11.90">
+        <div class="item-header"><span class="item-name">Heineken (Long Neck)</span><span class="item-price">R$ 11,90</span></div>
+      </div>
+      <div class="item" data-name="Combo 5 Long Necks" data-price="54.50">
+        <div class="item-header">
+          <span class="item-name">Combo 5 Long Necks <span class="badge hot">Promo</span></span>
+          <span class="item-price">R$ 54,50</span>
+        </div>
+        <div class="item-desc">Heineken, Eisenbahn ou Stella.</div>
+      </div>
+      <div class="item" data-name="Caipirinha de Limão" data-price="12.90">
+        <div class="item-header"><span class="item-name">Caipirinha de Limão</span><span class="item-price">R$ 12,90</span></div>
+      </div>
+      <div class="item" data-name="Caipivodka de Frutas" data-price="16.90">
+        <div class="item-header"><span class="item-name">Caipivodka de Frutas</span><span class="item-price">R$ 16,90</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="cart-btn">
+    <i class="fas fa-shopping-cart"></i>
+    <span id="cart-count">0</span>
+  </div>
+
+  <button id="back-to-top">↑</button>
+
+  <div id="cart-modal" class="modal">
+    <div class="modal-content" id="cart-modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2 style="margin-top:0; border:none; color: var(--text-hazelnut);">Seu Pedido</h2>
+      <div id="cart-items"></div>
+    </div>
+  </div>
+
+  <script>
+  // Configuração PIX do Cliente
+  const PIX_DATA = {
+    chave: "60702999000142",
+    nome: "CAFE DU BOX", 
+    cidade: "RIO DE JANEIRO",
+    txid: "CAFEDUBOX"
+  };
+
+  // Funções Matemáticas do PIX
+  function gerarPayloadPix(valor) {
+    const format = (id, val) => id + val.length.toString().padStart(2, '0') + val;
+    const payloadKey = format('00', 'br.gov.bcb.pix') + format('01', PIX_DATA.chave);
+    let arr = [
+      format('00', '01'),
+      format('26', payloadKey),
+      format('52', '0000'),
+      format('53', '986'),
+      format('54', valor),
+      format('58', 'BR'),
+      format('59', PIX_DATA.nome),
+      format('60', PIX_DATA.cidade),
+      format('62', format('05', PIX_DATA.txid)),
+      '6304'
+    ];
+    const str = arr.join('');
+    return str + crc16(str);
+  }
+
+  function crc16(str) {
+    let crc = 0xFFFF;
+    for (let i = 0; i < str.length; i++) {
+      let c = str.charCodeAt(i);
+      crc ^= c << 8;
+      for (let j = 0; j < 8; j++) {
+        if (crc & 0x8000) { crc = (crc << 1) ^ 0x1021; } else { crc = crc << 1; }
+      }
+    }
+    return (crc & 0xFFFF).toString(16).toUpperCase().padStart(4, '0');
+  }
+
+  // Lógica do Carrinho
+  let cart = JSON.parse(localStorage.getItem('cafeDuBoxCart')) || [];
+
+  function updateQuantities() {
+    const counts = {};
+    cart.forEach(item => counts[item.name] = (counts[item.name] || 0) + 1);
+    
+    document.querySelectorAll('.item').forEach(el => {
+      const name = el.getAttribute('data-name');
+      const qty = counts[name] || 0;
+      let ctrl = el.querySelector('.qty-controls');
+      
+      // Se tiver quantidade, mostra controles
+      if (qty > 0 && !ctrl) {
+        ctrl = document.createElement('div');
+        ctrl.className = 'qty-controls';
+        ctrl.innerHTML = `
+          <button onclick="adjustQty('${name}', -1)" class="qty-btn">–</button>
+          <span class="qty-val">${qty}</span>
+          <button onclick="adjustQty('${name}', 1)" class="qty-btn">+</button>
+        `;
+        el.appendChild(ctrl);
+      } else if (qty > 0 && ctrl) {
+        ctrl.querySelector('.qty-val').innerText = qty;
+      } else if (qty === 0 && ctrl) {
+        ctrl.remove(); // Remove controles se zerar
+      }
+    });
+  }
+
+  window.adjustQty = function(name, delta) {
+    event.stopPropagation(); // Evita abrir o modal ao clicar nos botões +/-
+    if (delta > 0) {
+      const el = document.querySelector(`.item[data-name="${name}"]`);
+      const price = parseFloat(el.getAttribute('data-price'));
+      cart.push({ name, price });
+    } else {
+      const index = cart.findIndex(item => item.name === name);
+      if (index !== -1) cart.splice(index, 1);
+    }
+    saveCart();
+  };
+
+  function saveCart() {
+    localStorage.setItem('cafeDuBoxCart', JSON.stringify(cart));
+    updateQuantities();
+    updateCartCount();
+    // Se o modal estiver aberto, atualiza ele em tempo real
+    if(document.getElementById('cart-modal').style.display === 'block') {
+      updateCartModal();
+    }
+  }
+
+  function updateCartCount() {
+    document.getElementById('cart-count').textContent = cart.length;
+  }
+
+  function generateWhatsAppMessage() {
+    const summary = {};
+    cart.forEach(item => {
+      if (!summary[item.name]) summary[item.name] = { price: item.price, qty: 0 };
+      summary[item.name].qty++;
+    });
+    let msg = "Olá Rian! Gostaria de antecipar o seguinte pedido:\n\n";
+    let total = 0;
+    for (const name in summary) {
+      const { qty, price } = summary[name];
+      const lineTotal = qty * price;
+      total += lineTotal;
+      msg += `• ${name} (x${qty})\n`;
+    }
+    msg += `\nTotal: R$ ${total.toFixed(2).replace('.', ',')}\nForma de pagamento: Pix`;
+    return encodeURIComponent(msg);
+  }
+
+  window.closeModal = function() {
+    document.getElementById('cart-modal').style.display = 'none';
+  }
+
+  function updateCartModal() {
+    const total = cart.reduce((sum, item) => sum + item.price, 0);
+    const container = document.getElementById('cart-items');
+    
+    if (cart.length === 0) {
+      container.innerHTML = '<p style="text-align:center; color:#999;">Seu carrinho está vazio.</p>';
+      return;
+    }
+    
+    // Agrupa itens para exibição limpa
+    const summary = {};
+    cart.forEach(item => {
+      if (!summary[item.name]) summary[item.name] = { price: item.price, qty: 0 };
+      summary[item.name].qty++;
+    });
+
+    let html = '<div style="margin-bottom:20px;">';
+    for(const name in summary) {
+      html += `<div style="display:flex; justify-content:space-between; margin-bottom:8px; border-bottom:1px solid #333; padding-bottom:5px;">
+        <span>${name} <small style="color:var(--text-sage)">x${summary[name].qty}</small></span>
+        <span>R$ ${(summary[name].price * summary[name].qty).toFixed(2)}</span>
+      </div>`;
+    }
+    html += '</div>';
+
+    const valorFormatado = total.toFixed(2);
+    const payload = gerarPayloadPix(valorFormatado);
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(payload)}`;
+
+    html += `<div class="cart-total">Total: R$ ${valorFormatado.replace('.', ',')}</div>`;
+    
+    // QR Code
+    html += `<div style="text-align:center;margin:15px 0; background: white; padding: 10px; display:inline-block; border-radius:4px;">
+              <img src="${qrUrl}" alt="QR Code Pix" style="width:180px;height:180px; display:block;">
+             </div>`;
+    
+    // Texto Copia e Cola
+    html += `<textarea id="pix-code-text" readonly style="width:100%;height:50px;font-size:0.7rem;background:#111;border:1px solid #444;color:#aaa;padding:5px;resize:none;">${payload}</textarea>`;
+    
+    // Botões de Ação
+    html += `<button class="action-btn btn-copy" onclick="document.getElementById('pix-code-text').select();document.execCommand('copy');alert('Código Pix copiado!')">📋 Copiar Código Pix</button>`;
+    
+    html += `<button class="action-btn btn-whatsapp" onclick="window.open('https://wa.me/5521993781417?text=${generateWhatsAppMessage()}', '_blank')">📲 Antecipar com Rian no WhatsApp</button>`;
+
+    container.innerHTML = html;
+  }
+
+  // Event Listeners
+  document.querySelectorAll('.item').forEach(item => {
+    item.addEventListener('click', (e) => {
+      // Se clicou nos botões de controle, não adiciona mais um (já tratado no onclick do botão)
+      if (e.target.tagName === 'BUTTON') return;
+      
+      const name = item.getAttribute('data-name');
+      const price = parseFloat(item.getAttribute('data-price'));
+      cart.push({ name, price });
+      saveCart();
+    });
+  });
+
+  document.getElementById('cart-btn').addEventListener('click', () => {
+    updateCartModal();
+    document.getElementById('cart-modal').style.display = 'block';
+  });
+
+  // Fecha ao clicar fora
+  window.addEventListener('click', (e) => {
+    if (e.target.id === 'cart-modal') closeModal();
+  });
+
+  // Scroll to Top
+  window.addEventListener('scroll', () => {
+    const btn = document.getElementById('back-to-top');
+    btn.style.display = (window.scrollY > 300) ? 'block' : 'none';
+  });
+  document.getElementById('back-to-top').onclick = () => window.scrollTo({top:0, behavior:'smooth'});
+
+  // Inicialização
+  updateQuantities();
+  updateCartCount();
+  </script>
+
+</body>
+</html>
